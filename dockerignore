@@ -1,0 +1,28 @@
+# Exclude everything
+*
+
+# Allow adding source code
+!src/
+!pom.xml
+!Dockerfile
+
+# Exclude temporary and configuration files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Exclude IDE files and folders
+.idea/
+*.iml
+*.ipr
+
+# Exclude Maven build files
+target/
+
+# Exclude configuration files not needed for the image
+application-dev.properties
+
+# Exclude folders not needed for the build
+.git/
+build/

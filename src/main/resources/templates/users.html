@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>All Users</title>
+    <link rel="shortcut icon" th:href="@{/images/logos/icon.ico}" type="image/x-icon">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="abs">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+                <a class="navbar-brand" th:href="${homepageUrl}"><div class="home-logo"></div></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
+                    <ul class="navbar-nav w-100 justify-content-end">
+                        <li class="nav-item active">
+                            <form th:action="@{/logout}" method="get">
+                                <button type="submit" class="btn-logout">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid ">
+    <div class="main">
+        <div class="container page">
+            <div class="container">
+
+
+                <div class="container content nox-tablepage">
+                    <div>
+                    <h1>Users</h1>
+                    </div>
+                    <div class="nox-table">
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="th-sm">User ID</th>
+                            <th scope="col" class="th-sm">Chat ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Roles</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.chatId}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td>
+                                <span th:each="role : ${user.roles}" th:text="${role.name.displayName}">Role Name</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

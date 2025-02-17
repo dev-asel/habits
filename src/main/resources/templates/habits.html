@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Habits</title>
+    <link rel="shortcut icon" th:href="@{/images/logos/icon.ico}" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="abs">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+                <a class="navbar-brand" th:href="${homepageUrl}"><div class="home-logo"></div></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
+                    <ul class="navbar-nav w-100 justify-content-end">
+                        <li class="nav-item active">
+                            <form th:action="@{/logout}" method="get">
+                                <button type="submit" class="btn-logout">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid ">
+    <div class="main">
+        <div class="container page">
+            <div class="container">
+                <div class="container content nox-page">
+                    <h3 id="current-weekday" class="weekday text-center" aria-label="current-weekday">current
+                        weekday</h3>
+                    <h1 id="current-date" class="current-date text-center" aria-label=current-date>current date</h1>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-5 order-2 order-lg-1">
+                            <div class="nox-calendar">
+                                <div class="selected-habit-name text-center">
+                                    <div id="selected-habit-name">Habit</div>
+                                </div>
+                                <div id="controls" class="controls">
+                                    <button id="prev-month"><</button>
+                                    <div><div id="go-date" class="date-icon">
+                                        <img src="/images/icons/calendar.png" alt="calendar" class="calendar-icon">
+                                    </div></div>
+                                    <span id="current-month"></span>
+                                    <div><div id="go-today" class="date-icon">
+                                        <img src="/images/icons/fav-date.png" alt="today" class="today-icon">
+                                    </div></div>
+                                    <button id="next-month">></button>
+                                </div>
+                                <div id="calendar" th:fragment="calendar"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-7 order-1 order-lg-2">
+                            <div id="addHabit" class="habit-input">
+                                <form th:action="@{/api/habits}" method="post">
+                                    <input type="text" name="name" placeholder="add habit" maxlength="70"
+                                           required/>
+                                    <input type="hidden" name="user_id" th:value="${userId}"/>
+                                    <button type="submit" class="add-habit-btn"></button>
+                                </form>
+                            </div>
+                            <div data-bs-spy="scroll" class="habitscroll habit-list">
+                                <div class="habit" th:each="habit : ${habits}">
+                                    <div class="nox-habits">
+                                        <form th:id="'habitForm' + ${habit.id}" th:action="@{/api/users/user/logs}"
+                                              method="post">
+                                            <input type="hidden" th:value="${habit.id}" name="id"/>
+                                            <input type="hidden" th:value="${userId}" name="user_id"/>
+                                            <input type="checkbox" class="checkbox-round habit-checkbox"
+                                                   th:attr="data-habit-id=${habit.id}"/>
+                                            <div class="habit-elem">
+                                                <div class="habit-name" th:attr="data-habit-id=${habit.id}"
+                                                     th:text="${habit.name}"></div>
+                                            </div>
+                                        </form>
+                                        <form th:id="'deleteHabitForm' + ${habit.id}"
+                                              th:action="@{'/api/habits/' + ${habit.id}}" method="delete"
+                                              style="display:inline;">
+                                            <input type="hidden" name="_method" value="DELETE"/>
+                                            <input type="hidden" th:value="${habit.id}" name="id"/>
+                                            <button type="submit" class="delete-button"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
